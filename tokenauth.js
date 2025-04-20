@@ -18,7 +18,12 @@ app.post("/generate-token", (req, res) => {
 
     })
 
-    users[username] = token;
+    res.cookie("token", token, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 1000
+    })
+
+    //add to cookies
     return res.status(200).send(token)
 
 })
@@ -31,7 +36,7 @@ app.get("/verify", (req, res) => {
     try {
         const verify = jwt.verify(token, secret)
         return res.status(200).send(verify)
-    } catch (e){
+    } catch (e) {
         console.log(e)
         return res.status(404).send("experied")
 
@@ -43,4 +48,3 @@ app.get("/verify", (req, res) => {
 
 
 app.listen(3000, () => { console.log("app running") })
-

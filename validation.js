@@ -2,11 +2,11 @@ const express = require("express");
 const { body, validationResult } = require("express-validator");
 const xss = require("xss-clean")
 const app = express();
-
+const helmet = require("helmet")
 
 app.use(xss())
 app.use(express.json())
-
+app.use(helmet())
 /*
  [
     body("username").notEmpty().withMessage("Not empty!"),
